@@ -1,0 +1,15 @@
+---
+title: "Decision Trees"
+author: "Nikhil Tarigonda"
+format: pdf
+editor: visual
+---
+
+## Decision trees
+
+### Loading the required libraries
+
+```{r}
+library(pacman)
+p_load(tidyverse)
+```
