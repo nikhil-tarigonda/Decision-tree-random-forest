@@ -11,5 +11,69 @@ editor: visual
 
 ```{r}
 library(pacman)
-p_load(tidyverse)
+p_load(tidyverse, rpart, ISLR, caTools, rpart.plot)
+```
+
+### Importing the data
+
+```{r}
+college_df <- College
+```
+
+### EDA
+
+```{r}
+college_df %>% ggplot(aes(Room.Board, Grad.Rate, color = Private)) +
+  geom_point(alpha = .5, size = 3)
+```
+
+```{r}
+college_df %>% ggplot(aes(Grad.Rate)) + geom_histogram(aes(fill = Private), bins = 50, alpha = 0.6, color = "black") + theme_classic()
+```
+
+Here, a value above 100 can be observed above 100 which is not appropriate.
+
+Finding the value,
+
+```{r}
+college_df %>% select(Grad.Rate) %>% filter(Grad.Rate > 100)
+```
+
+Replacing it with 100,
+
+```{r}
+college_df["Cazenovia College","Grad.Rate"] <- 100
+```
+
+### Feature Scalling
+
+```{r}
+
+```
+
+### Train Test Split
+
+```{r}
+set.seed(101)
+sample <- sample.split(college_df$Private, SplitRatio = 0.7)
+train <- subset(college_df, sample == T)
+test <- subset(college_df, sample == F)
+```
+
+### Model and Prediction
+
+```{r}
+tree <- rpart(Private ~ .,method = 'class', data = train)
+```
+
+### Prediction
+
+```{r}
+tree.preds <- predict(tree, test)
+```
+
+Decision Tree
+
+```{r}
+prp(tree)
 ```
