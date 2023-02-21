@@ -1,0 +1,42 @@
+---
+title: "Random forest"
+author: "Nikhil Tarigonda"
+format: pdf
+editor: visual
+---
+
+## Required Libraries
+
+```{r}
+library(pacman)
+p_load(tidyverse, randomForest, ISLR, caTools)
+```
+
+### Importing the data
+
+```{r}
+college_df <- College
+```
+
+### Train and Test split
+
+```{r}
+set.seed(101)
+sample <- sample.split(college_df$Private, SplitRatio = 0.7)
+train <- subset(college_df, sample == T)
+test <- subset(college_df, sample == F)
+```
+
+### Model
+
+```{r}
+rf.model <- randomForest(Private ~ . , train, importance = T)
+rf.model$confusion
+```
+
+### Predictions and confusion matrix
+
+```{r}
+rf.preds <- predict(rf.model, test)
+table(rf.preds, test$Private)
+```
