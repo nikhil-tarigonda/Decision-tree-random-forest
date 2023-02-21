@@ -45,12 +45,6 @@ Replacing it with 100,
 college_df["Cazenovia College","Grad.Rate"] <- 100
 ```
 
-### Feature Scalling
-
-```{r}
-
-```
-
 ### Train Test Split
 
 ```{r}
